@@ -1,3 +1,4 @@
+import { PageHeader } from '@/components/layout/page-header';
 import { PostCard } from "@/components/forum/post-card";
 import { Button } from "@/components/ui/button";
 import { PenSquare } from "lucide-react";
@@ -33,21 +34,24 @@ const mockPosts: Post[] = [
 
 export default function ForumPage() {
     return (
-        <div className="p-4 md:p-8">
-            <div className="flex justify-between items-center mb-8">
-                <div>
-                    <h1 className="text-3xl font-bold font-headline">Support Forum</h1>
-                    <p className="text-lg text-muted-foreground">A safe and anonymous space to share and connect.</p>
+        <div className="flex-1 flex flex-col">
+            <PageHeader breadcrumbs={[{ href: '/', label: 'Dashboard' }, { label: 'Forum' }]} />
+            <div className="flex-1 p-4 md:p-8">
+                <div className="flex justify-between items-center mb-8">
+                    <div>
+                        <h1 className="text-3xl font-bold font-headline">Support Forum</h1>
+                        <p className="text-lg text-muted-foreground">A safe and anonymous space to share and connect.</p>
+                    </div>
+                    <Button>
+                        <PenSquare className="mr-2 h-4 w-4" />
+                        Create Post
+                    </Button>
                 </div>
-                <Button>
-                    <PenSquare className="mr-2 h-4 w-4" />
-                    Create Post
-                </Button>
-            </div>
-            <div className="space-y-6">
-                {mockPosts.map((post) => (
-                    <PostCard key={post.id} post={post} />
-                ))}
+                <div className="space-y-6">
+                    {mockPosts.map((post) => (
+                        <PostCard key={post.id} post={post} />
+                    ))}
+                </div>
             </div>
         </div>
     );

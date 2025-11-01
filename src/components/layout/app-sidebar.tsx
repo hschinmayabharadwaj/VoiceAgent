@@ -15,6 +15,7 @@ import {
   Gamepad2,
   Mic,
   Bot,
+  Brain,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -44,6 +45,7 @@ const menuItems = [
   { href: '/check-in', label: 'Daily Check-in', icon: SmilePlus },
   { href: '/progress', label: 'My Progress', icon: LineChart },
   { href: '/resources', label: 'Resources', icon: BookHeart },
+  { href: '/mindfulness', label: 'Mindfulness', icon: Brain },
   { href: '/forum', label: 'Forum', icon: MessageSquare },
   { href: '/games', label: 'Games', icon: Gamepad2 },
   { href: '/voice-agent', label: 'Voice Agent', icon: Mic },
@@ -86,7 +88,6 @@ export function AppSidebar() {
             <Sparkles className="h-6 w-6" />
           </div>
           <h1 className="text-xl font-bold font-headline">ManasMitra</h1>
-          <SidebarTrigger className="ml-auto" />
         </div>
       </SidebarHeader>
       <SidebarContent>

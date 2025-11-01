@@ -27,6 +27,12 @@ import {
     type TTSInput,
 } from '@/ai/flows/voice-agent-flow';
 import {
+    voiceAgent as enhancedVoiceAgentFlow,
+    textToSpeech as enhancedTextToSpeechFlow,
+    type ConversationInput as EnhancedConversationInput,
+    type TTSInput as EnhancedTTSInput,
+} from '@/ai/flows/enhanced-voice-agent-flow';
+import {
     chat as chatFlow,
     type ChatInput,
     type ChatOutput,
@@ -94,13 +100,81 @@ export async function getChoiceAnalysis(input: AnalyzeChoicesInput): Promise<Ana
     }
 }
 
+// ML Model API Integration
+interface MLPrediction {
+    risk_score: number;
+    risk_level: string;
+    confidence: number;
+    text: string;
+}
+
+async function detectSuicideRisk(text: string): Promise<MLPrediction | null> {
+    try {
+        const response = await fetch('http://localhost:8000/predict', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ text }),
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const prediction: MLPrediction = await response.json();
+        console.log('ML Risk Detection:', prediction);
+        return prediction;
+    } catch (error) {
+        console.error('ML API Error:', error);
+        return null;
+    }
+}
+
 export async function voiceAgent(input: ConversationInput) {
     try {
-        const response = await voiceAgentFlow(input);
-        return response;
+        // First, check for suicide risk using ML model
+        const riskPrediction = await detectSuicideRisk(input.userInput);
+        
+        // Prepare enhanced input with ML results
+        const enhancedInput = {
+            ...input,
+            mlRiskScore: riskPrediction?.risk_score || 0,
+            mlRiskLevel: riskPrediction?.risk_level || 'safe',
+            mlConfidence: riskPrediction?.confidence || 0
+        };
+        
+        // Use enhanced voice agent with ML data
+        const response = await enhancedVoiceAgentFlow(enhancedInput);
+        
+        // Add ML prediction data to response
+        return {
+            ...response,
+            mlPrediction: riskPrediction
+        };
+        
     } catch (error) {
-        console.error("Error in voice agent flow:", error);
-        return { response: "I'm having a little trouble understanding. Could you please say that again?" };
+        console.error("Error in enhanced voice agent flow:", error);
+        // Fallback to basic voice agent
+        try {
+            const fallbackResponse = await voiceAgentFlow(input);
+            return { 
+                ...fallbackResponse, 
+                safetyAlert: false, 
+                riskLevel: 'safe', 
+                immediateIntervention: false,
+                mlPrediction: null
+            };
+        } catch (fallbackError) {
+            console.error("Fallback voice agent also failed:", fallbackError);
+            return { 
+                response: "I'm having a little trouble understanding. Could you please say that again?",
+                safetyAlert: false,
+                riskLevel: 'safe',
+                immediateIntervention: false,
+                mlPrediction: null
+            };
+        }
     }
 }
 

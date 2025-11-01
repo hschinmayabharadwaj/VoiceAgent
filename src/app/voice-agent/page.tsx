@@ -1,15 +1,24 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { PageHeader } from '@/components/layout/page-header';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Mic, MicOff, Loader2, Volume2, User, Bot } from 'lucide-react';
+import { Mic, MicOff, Loader2, Volume2, User, Bot, AlertTriangle } from 'lucide-react';
 import { voiceAgent, textToSpeech } from '@/lib/actions';
 import { useToast } from '@/hooks/use-toast';
+import { CrisisIntervention } from '@/components/crisis-intervention';
 
 interface Message {
   role: 'user' | 'model';
   content: string;
+  safetyAlert?: boolean;
+  riskLevel?: string;
+  mlPrediction?: {
+    risk_score: number;
+    risk_level: string;
+    confidence: number;
+  } | null;
 }
 
 export default function VoiceAgentPage() {
@@ -17,6 +26,9 @@ export default function VoiceAgentPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [conversation, setConversation] = useState<Message[]>([]);
   const [interimTranscript, setInterimTranscript] = useState('');
+  const [showCrisisIntervention, setShowCrisisIntervention] = useState(false);
+  const [currentRiskLevel, setCurrentRiskLevel] = useState<'safe' | 'moderate' | 'high' | 'critical'>('safe');
+  const [currentMlPrediction, setCurrentMlPrediction] = useState<any>(null);
   const recognition = useRef<any>(null); // Using 'any' for SpeechRecognition for broader compatibility
   const audioPlayer = useRef<HTMLAudioElement | null>(null);
   const { toast } = useToast();
@@ -36,14 +48,27 @@ export default function VoiceAgentPage() {
 
     if (role === 'user') {
       try {
-        // Get AI text response
+        // Get AI text response with safety detection
         const aiResult = await voiceAgent({
           history: newConversation,
           currentInput: text,
         });
 
-        // Add AI response to conversation
-        setConversation(prev => [...prev, { role: 'model', content: aiResult.response }]);
+        // Add AI response to conversation with safety info
+        setConversation(prev => [...prev, { 
+          role: 'model', 
+          content: aiResult.response,
+          safetyAlert: aiResult.safetyAlert,
+          riskLevel: aiResult.riskLevel,
+          mlPrediction: aiResult.mlPrediction
+        }]);
+
+        // Handle crisis intervention
+        if (aiResult.safetyAlert && (aiResult.riskLevel === 'high' || aiResult.riskLevel === 'critical')) {
+          setCurrentRiskLevel(aiResult.riskLevel as any);
+          setCurrentMlPrediction(aiResult.mlPrediction);
+          setShowCrisisIntervention(true);
+        }
 
         // Get AI audio response
         const audioResult = await textToSpeech({ text: aiResult.response });
@@ -150,14 +175,16 @@ export default function VoiceAgentPage() {
 
 
   return (
-    <div className="p-4 md:p-8 flex justify-center">
-      <Card className="w-full max-w-2xl">
-        <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold font-headline">Voice Agent</CardTitle>
-          <CardDescription className="text-lg text-muted-foreground">
-            A safe space to talk through your feelings.
-          </CardDescription>
-        </CardHeader>
+    <div className="flex-1 flex flex-col">
+      <PageHeader breadcrumbs={[{ href: '/', label: 'Dashboard' }, { label: 'Voice Agent' }]} />
+      <div className="flex-1 p-4 md:p-8 flex justify-center">
+        <Card className="w-full max-w-2xl">
+          <CardHeader className="text-center">
+            <CardTitle className="text-3xl font-bold font-headline">Voice Agent</CardTitle>
+            <CardDescription className="text-lg text-muted-foreground">
+              A safe space to talk through your feelings.
+            </CardDescription>
+          </CardHeader>
         <CardContent>
           <div className="space-y-4 h-96 overflow-y-auto p-4 rounded-lg border bg-muted/50">
             {conversation.length === 0 && !isRecording && (
@@ -170,12 +197,32 @@ export default function VoiceAgentPage() {
             {conversation.map((msg, index) => (
               <div key={index} className={`flex items-start gap-3 ${msg.role === 'user' ? 'justify-end' : ''}`}>
                 {msg.role === 'model' && (
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center">
-                    <Bot size={20}/>
+                  <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+                    msg.safetyAlert && (msg.riskLevel === 'high' || msg.riskLevel === 'critical') 
+                      ? 'bg-red-100 text-red-600' 
+                      : 'bg-primary text-primary-foreground'
+                  }`}>
+                    {msg.safetyAlert && (msg.riskLevel === 'high' || msg.riskLevel === 'critical') ? (
+                      <AlertTriangle size={16}/>
+                    ) : (
+                      <Bot size={20}/>
+                    )}
                   </div>
                 )}
-                <div className={`rounded-lg px-4 py-2 max-w-sm ${msg.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-background'}`}>
+                <div className={`rounded-lg px-4 py-2 max-w-sm ${
+                  msg.role === 'user' 
+                    ? 'bg-primary text-primary-foreground' 
+                    : msg.safetyAlert && (msg.riskLevel === 'high' || msg.riskLevel === 'critical')
+                      ? 'bg-red-50 border border-red-200'
+                      : 'bg-background'
+                }`}>
                   {msg.content}
+                  {msg.safetyAlert && msg.riskLevel === 'moderate' && (
+                    <div className="mt-2 text-xs text-amber-600 flex items-center gap-1">
+                      <AlertTriangle size={12} />
+                      Support resources available
+                    </div>
+                  )}
                 </div>
                  {msg.role === 'user' && (
                   <div className="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-accent-foreground flex items-center justify-center">
@@ -214,7 +261,18 @@ export default function VoiceAgentPage() {
                 {isRecording ? "Listening..." : (isLoading ? "Thinking..." : "Tap the mic to talk")}
             </p>
         </CardFooter>
-      </Card>
+        </Card>
+      </div>
+      
+      {showCrisisIntervention && (
+        <CrisisIntervention
+          riskLevel={currentRiskLevel}
+          mlPrediction={currentMlPrediction}
+          onDismiss={() => {
+            setShowCrisisIntervention(false);
+          }}
+        />
+      )}
     </div>
   );
 }

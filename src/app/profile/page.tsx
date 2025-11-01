@@ -10,6 +10,7 @@ import {
   type ConfirmationResult,
 } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
+import { PageHeader } from '@/components/layout/page-header';
 import { useAuth, useUser, useFirestore } from '@/firebase';
 import { Button } from '@/components/ui/button';
 import {
@@ -183,9 +184,11 @@ export default function ProfilePage() {
 
 
   return (
-    <div className="p-4 md:p-8">
-      <h1 className="text-3xl font-bold font-headline mb-8">My Profile</h1>
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+    <div className="flex-1 flex flex-col">
+      <PageHeader breadcrumbs={[{ href: '/', label: 'Dashboard' }, { label: 'Profile' }]} />
+      <div className="flex-1 p-4 md:p-8">
+        <h1 className="text-3xl font-bold font-headline mb-8">My Profile</h1>
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         <Card className="lg:col-span-2">
           <form onSubmit={handleProfileUpdate}>
             <CardHeader>

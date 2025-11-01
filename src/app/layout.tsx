@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
+import { SidebarProvider, SidebarInset, SidebarRail } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/layout/app-sidebar';
 import { Toaster } from '@/components/ui/toaster';
 import { FirebaseClientProvider } from '@/firebase';
@@ -29,6 +29,7 @@ export default function RootLayout({
         <FirebaseClientProvider>
           <SidebarProvider>
             <AppSidebar />
+            <SidebarRail />
             <SidebarInset>{children}</SidebarInset>
             <Toaster />
           </SidebarProvider>

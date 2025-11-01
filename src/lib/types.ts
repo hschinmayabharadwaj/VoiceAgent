@@ -30,3 +30,7 @@ export type Choice = {
   scenario: string;
   choice: string;
 };
+
+export type MindfulnessSessionType = 'breathing' | 'meditation' | 'body-scan' | 'mindful-moment';
+
+export type ExperienceLevel = 'beginner' | 'intermediate' | 'advanced';
