@@ -1,264 +1,163 @@
-# ManasMitra: An AI-Powered Mental Wellness Companion
+# 🧠 ManasMitra: An AI-Powered Mental Wellness Companion
 
-ManasMitra is a confidential and empathetic mental wellness application designed to support users on their well-being journey. Powered by AI, it provides a safe space for self-reflection, personalized encouragement, and access to supportive resources.
+**ManasMitra** is a confidential and empathetic AI-powered mental wellness application designed to support users on their well-being journey.  
+It provides a safe space for self-reflection, personalized encouragement, and access to supportive resources through multi-modal AI interaction.
 
-## Key Features
+---
 
-- **Dashboard**: A welcoming home screen that provides a personalized greeting and a unique, AI-generated daily affirmation to start the day on a positive note.
-- **Daily Check-in**: An intuitive, multi-step flow that allows users to log their mood and feelings. The app's AI assistant provides an empathetic, personalized response and suggests a relevant wellness resource based on the user's input.
-- **Voice Agent**: An interactive voice-powered AI companion that provides empathetic conversation through speech-to-text and text-to-speech technology.
-- **Mindfulness Sessions**: Interactive guided meditation, breathing exercises, body scans, and mindful moments with customizable duration and experience levels.
-- **Progress Tracking**: A visual representation of the user's mood trends over time, helping them recognize patterns and celebrate their wellness journey.
-- **Resource Hub**: A curated collection of articles, exercises, and guides on topics like guided meditation, breathing techniques, and emotional awareness.
-- **Anonymous Support Forum**: A safe and anonymous community space where users can share their experiences, offer support, and connect with others who may be facing similar challenges.
+## 🌿 Overview
 
-## Tech Stack
+ManasMitra goes beyond traditional chatbots — it’s built as an **Agentic AI System**, a network of specialized AI agents working collaboratively to enhance user mental wellness through proactive, context-aware, and emotionally intelligent support.
 
-This application is built with a modern, component-driven, and AI-first technology stack:
+---
 
-- **Framework**: [Next.js](https://nextjs.org/) (using the App Router)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **UI Library**: [React](https://react.dev/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Component Library**: [ShadCN UI](https://ui.shadcn.com/)
-- **Generative AI**: [Firebase Genkit](https://firebase.google.com/docs/genkit) with Google's Gemini models
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **State Management**: React Hooks and Context API for client-side state.
-- **Data Persistence**: Browser Local Storage for persisting user data like check-in history.
-- **Deployment**: Configured for [Firebase App Hosting](https://firebase.google.com/docs/app-hosting).
+## ✨ Key Features
 
-## Getting Started
+### 🏠 Dashboard  
+A welcoming home screen that greets users personally and displays a unique, **AI-generated daily affirmation** to begin the day positively.
 
-To get started with development, run the following command:
+### 💭 Daily Check-in  
+An intuitive, step-by-step flow allowing users to **log their mood and feelings**.  
+The AI assistant provides **empathetic feedback** and suggests a **wellness resource** based on emotional state.
 
-```bash
-npm run dev
-```
+### 🗣️ Voice Agent  
+An interactive, **voice-powered AI companion** offering empathetic, natural conversations using:
+- Speech-to-text (via Web Speech API)
+- Text-to-speech (Gemini 2.5 Flash Preview TTS)
 
-This will start the Next.js development server, and you can view the application by navigating to `http://localhost:9002` in your browser.
+### 🧘 Mindfulness Sessions  
+Interactive guided meditation, breathing exercises, and mindful moments with customizable **duration and experience levels**.
 
-## Agentic AI System: Multi-Modal Mental Wellness Support
+### 📈 Progress Tracking  
+Visual insights into mood trends over time to help users **recognize emotional patterns** and **celebrate growth**.
 
-ManasMitra is built as an **agentic AI system** - a sophisticated network of specialized AI agents that work together to provide comprehensive mental wellness support. Unlike simple chatbots, our agentic system demonstrates autonomous decision-making, contextual awareness, and proactive user engagement across multiple interaction modalities.
+### 📚 Resource Hub  
+A curated collection of **articles, exercises, and guides** on mindfulness, breathing, and emotional awareness.
 
-### What Makes ManasMitra an Agentic AI?
+### 🤝 Anonymous Support Forum  
+A safe, **anonymous community space** for sharing experiences, offering peer support, and connecting with others.
 
-1. **Autonomous Decision-Making**: Each AI agent makes independent decisions about how to respond based on user context
-2. **Goal-Oriented Behavior**: Agents work toward the overarching goal of improving user mental wellness
-3. **Multi-Agent Collaboration**: Different specialized agents handle specific tasks and contexts
-4. **Proactive Engagement**: Agents don't just respond - they actively suggest resources, activities, and interventions
-5. **Contextual Memory**: Maintains conversation history and user patterns across sessions
-6. **Adaptive Responses**: Agents modify their behavior based on user emotional state and needs
+---
 
-## Voice Agent: AI-Powered Conversational Support
+## 🤖 Agentic AI System
 
-The Voice Agent is one of ManasMitra's most innovative features, providing users with an empathetic, voice-driven AI companion designed for mental wellness support. This feature combines advanced speech recognition, natural language processing, and text-to-speech synthesis to create a seamless conversational experience.
+### What Makes ManasMitra Agentic
+- 🧩 **Autonomous Decision-Making:** Each AI agent independently decides responses based on user context.  
+- 🎯 **Goal-Oriented Behavior:** All agents work toward improving user mental wellness.  
+- 🧠 **Multi-Agent Collaboration:** Specialized agents handle tasks like affirmation, empathy, and recommendations.  
+- 💬 **Proactive Engagement:** The system not only responds but also suggests helpful actions or content.  
+- 🕊️ **Contextual Memory:** Maintains history and patterns for personalized interactions.  
+- 🌱 **Adaptive Responses:** Adjusts tone and behavior based on user emotions.
 
-### How the Voice Agent Works
+---
 
-#### 1. **Speech Recognition & Input Processing**
-- Uses the browser's native Web Speech API (`SpeechRecognition` or `webkitSpeechRecognition`)
-- Provides real-time interim transcript display while listening
-- Converts spoken words to text for AI processing
-- Handles multiple languages (currently optimized for English)
+## 🧩 Complete AI Agent Ecosystem
 
-#### 2. **AI Conversation Engine**
-- **Model**: Powered by Google's Gemini 2.5 Flash model via Firebase Genkit
-- **Personality**: ManasMitra - a caring, empathetic mental wellness assistant
-- **Conversation Memory**: Maintains full conversation history for contextual responses
-- **Response Style**: Designed to be supportive, non-clinical, and conversational (2-3 sentences per response)
+| **Agent** | **Purpose** | **Key Capabilities** |
+|------------|-------------|----------------------|
+| **1. Voice Agent** | Real-time voice conversations | Speech recognition, empathetic dialogue, self-reflection guidance, helpline escalation |
+| **2. Chat Agent** | Text-based support | Emotional understanding, proactive suggestions, contextual flow |
+| **3. Daily Affirmation Agent** | Generate uplifting affirmations | Personalized, psychology-based daily encouragement |
+| **4. Empathetic Response Agent** | Handle daily check-ins | Emotional validation, personalized feedback |
+| **5. Resource Recommendation Agent** | Suggest wellness resources | Context-aware recommendations based on user mood |
+| **6. Story Analysis Agent** | Interpret user-created stories | Emotional insight through narrative analysis |
+| **7. Choice Analysis Agent** | Analyze decisions in activities | Behavioral pattern recognition and self-awareness feedback |
 
-#### 3. **Text-to-Speech Synthesis**
-- **TTS Model**: Google's Gemini 2.5 Flash Preview TTS model
-- **Voice**: Uses "Algenib" prebuilt voice configuration for warm, natural speech
-- **Audio Format**: Generates PCM audio, converted to WAV format for browser compatibility
-- **Playback**: Seamless audio playback through HTML5 Audio API
+### Agent Collaboration  
+- ⚙️ **Action Layer:** Coordinates communication among agents  
+- 🔁 **Context Sharing:** Shared memory of user interactions  
+- 💖 **Unified Personality:** All agents reflect the same empathetic “ManasMitra” identity  
+- 🚨 **Crisis Protocol:** Any agent can trigger professional helpline suggestions  
 
-## Complete AI Agent Ecosystem
-
-ManasMitra employs a sophisticated multi-agent architecture with **7 specialized AI agents**, each designed for specific mental wellness tasks:
-
-### **1. Voice Agent** (`voice-agent-flow.ts`)
-- **Purpose**: Real-time voice-based therapeutic conversations
-- **Capabilities**: 
-  - Speech-to-text processing and natural conversation
-  - Empathetic listening and validation
-  - Gentle questioning and self-reflection guidance
-  - Crisis intervention with helpline recommendations
-- **Technology**: Gemini 2.5 Flash + TTS integration
-
-### **2. Chat Agent** (`chat-flow.ts`) 
-- **Purpose**: Text-based conversational support with proactive feature suggestions
-- **Capabilities**:
-  - Deep emotional understanding and validation
-  - Proactive app feature recommendations based on user state
-  - Professional helpline provision for crisis situations
-  - Contextual conversation flow management
-- **Unique Features**: Actively suggests app features like Daily Check-in, Calm Pulse games, Resource Hub
-
-### **3. Daily Affirmation Agent** (`daily-affirmations.ts`)
-- **Purpose**: Generates personalized, uplifting daily affirmations
-- **Capabilities**:
-  - Contextual affirmation generation
-  - Personalization based on user patterns
-  - Positive psychology integration
-- **Goal**: Start each day with personalized encouragement
-
-### **4. Empathetic Response Agent** (`empathetic-response-to-daily-checkin.ts`)
-- **Purpose**: Provides compassionate responses to daily mood check-ins
-- **Capabilities**:
-  - Emotional validation and understanding
-  - Personalized feedback based on mood patterns
-  - Encouraging and supportive messaging
-- **Integration**: Works with Resource Recommendation Agent
-
-### **5. Contextual Resource Recommendation Agent** (`contextual-resource-recommendation.ts`)
-- **Purpose**: Intelligently recommends wellness resources based on user state
-- **Capabilities**:
-  - Analyzes check-in data for resource matching
-  - Provides contextual explanations for recommendations
-  - Bridges user needs with available resources
-- **Smart Matching**: Connects specific emotional states to relevant wellness resources
-
-### **6. Story Analysis Agent** (`story-analysis-flow.ts`)
-- **Purpose**: Analyzes user-created stories for emotional insights
-- **Capabilities**:
-  - Creative content analysis
-  - Emotional state identification through storytelling
-  - Therapeutic feedback on creative expression
-- **Therapeutic Value**: Uses narrative therapy principles
-
-### **7. Choice Analysis Agent** (`choice-analysis-flow.ts`)
-- **Purpose**: Analyzes user choices in interactive scenarios for psychological insights
-- **Capabilities**:
-  - Behavioral pattern recognition
-  - Emotional tendency identification (Empathetic, Assertive, Cautious, etc.)
-  - Non-judgmental personality insights
-  - Encouraging self-awareness feedback
-- **Application**: Used in interactive story games and decision-making exercises
-
-### **Agent Orchestration & Collaboration**
-
-- **Action Layer** (`actions.ts`): Coordinates between different agents
-- **Error Resilience**: Each agent has graceful fallbacks to maintain user experience
-- **Context Sharing**: Agents can access conversation history and user patterns
-- **Unified Personality**: All agents embody "ManasMitra" - caring, empathetic, non-clinical
-- **Crisis Protocol**: Multiple agents can trigger professional helpline recommendations
-
-### **Agentic AI Architecture Benefits**
-
-1. **Specialized Expertise**: Each agent is optimized for specific mental wellness tasks
-2. **Scalable Intelligence**: New agents can be added without disrupting existing functionality  
-3. **Contextual Switching**: System automatically selects appropriate agents based on user needs
-4. **Collaborative Intelligence**: Agents work together (e.g., Check-in + Resource Recommendation)
-5. **Continuous Learning**: Each agent can be fine-tuned independently based on user feedback
-
-### Technical Architecture
-
-```
+---
+## 🧠 Voice Agent Architecture
 User Speech Input
-    ↓
+↓
 Browser Speech Recognition API
-    ↓
+↓
 Text Transcription
-    ↓
+↓
 Voice Agent Flow (Gemini 2.5 Flash)
-    ↓
+↓
 AI Response Generation
-    ↓
+↓
 Text-to-Speech Flow (Gemini 2.5 Flash Preview TTS)
-    ↓
+↓
 Audio Generation & Playback
-    ↓
+↓
 User Hears Response
-```
-
-### Key Features of the Voice Agent
-
-1. **Real-time Conversation**: Bidirectional voice communication with immediate feedback
-2. **Emotional Intelligence**: AI trained specifically for mental wellness conversations
-3. **Conversation Continuity**: Maintains context across multiple exchanges
-4. **Privacy-First**: All conversations happen in real-time without permanent storage
-5. **Accessibility**: Voice-first interface for users who prefer speaking over typing
-6. **Cross-browser Compatibility**: Works with modern browsers supporting Web Speech API
-
-### Usage Guidelines
-
-The Voice Agent is designed with specific therapeutic principles:
-- **Non-directive Approach**: Doesn't provide medical advice or diagnoses
-- **Validation-Focused**: Acknowledges and validates user feelings
-- **Strength-Based**: Highlights user resilience and past successes
-- **Question-Guided**: Uses gentle questions to encourage self-reflection
-- **Hope-Instilling**: Maintains optimistic, supportive tone throughout conversations
-
-This sophisticated voice interaction system represents a cutting-edge approach to AI-powered mental wellness support, combining multiple AI models and advanced web technologies to create a truly empathetic digital companion.
-
-## Key Features
-
-- **Dashboard**: A welcoming home screen that provides a personalized greeting and a unique, AI-generated daily affirmation to start the day on a positive note.
-- **Daily Check-in**: An intuitive, multi-step flow that allows users to log their mood and feelings. The app's AI assistant provides an empathetic, personalized response and suggests a relevant wellness resource based on the user's input.
-- **Progress Tracking**: A visual representation of the user's mood trends over time, helping them recognize patterns and celebrate their wellness journey.
-- **Resource Hub**: A curated collection of articles, exercises, and guides on topics like guided meditation, breathing techniques, and emotional awareness.
-- **Anonymous Support Forum**: A safe and anonymous community space where users can share their experiences, offer support, and connect with others who may be facing similar challenges.
-
-## Tech Stack
-
-This application is built with a modern, component-driven, and AI-first technology stack:
-
-- **Framework**: [Next.js](https://nextjs.org/) (using the App Router)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **UI Library**: [React](https://react.dev/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Component Library**: [ShadCN UI](https://ui.shadcn.com/)
-- **Generative AI**: [Firebase Genkit](https://firebase.google.com/docs/genkit) with Google's Gemini models
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **State Management**: React Hooks and Context API for client-side state.
-- **Data Persistence**: Browser Local Storage for persisting user data like check-in history.
-- **Deployment**: Configured for [Firebase App Hosting](https://firebase.google.com/docs/app-hosting).
-
-## Getting Started
-
-To get started with development, run the following command:
-
-```bash
-npm run dev
-```
-
-This will start the Next.js development server, and you can view the application by navigating to `http://localhost:9002` in your browser.
-
-since this is new It is just a prototype
 
 
-## Tech Stack
+### 🎧 Voice Agent Features  
+- Real-time bidirectional voice conversation  
+- Emotional and contextual awareness  
+- Conversation continuity and memory  
+- Privacy-first (no permanent data storage)  
+- Works across browsers supporting Web Speech API  
+- Voice-first accessibility for users preferring speech  
 
-This application is built with a modern, component-driven, and AI-first technology stack:
+---
 
-- **Framework**: [Next.js](https://nextjs.org/) (using the App Router)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **UI Library**: [React](https://react.dev/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Component Library**: [ShadCN UI](https://ui.shadcn.com/)
-- **Generative AI**: [Firebase Genkit](https://firebase.google.com/docs/genkit) with Google's Gemini models
-  - **Conversational AI**: Gemini 2.5 Flash for text generation
-  - **Voice Synthesis**: Gemini 2.5 Flash Preview TTS for natural speech generation
-- **Voice Technologies**: 
-  - **Speech Recognition**: Web Speech API (SpeechRecognition/webkitSpeechRecognition)
-  - **Audio Processing**: WAV audio encoding/decoding for cross-browser compatibility
-  - **Audio Playback**: HTML5 Audio API
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **State Management**: React Hooks and Context API for client-side state.
-- **Data Persistence**: Browser Local Storage for persisting user data like check-in history.
-- **Deployment**: Configured for [Firebase App Hosting](https://firebase.google.com/docs/app-hosting).
+## 🧘‍♀️ Therapeutic Design Principles
 
-## Getting Started
+- **Non-directive:** No medical advice or diagnoses  
+- **Validation-focused:** Recognizes and validates feelings  
+- **Strength-based:** Highlights user resilience  
+- **Gentle questioning:** Encourages self-reflection  
+- **Hope-instilling:** Maintains a positive, supportive tone  
 
-To get started with development, run the following command:
+---
+
+## 🛠️ Tech Stack
+
+| **Layer** | **Technology** |
+|------------|----------------|
+| **Framework** | Next.js (App Router) |
+| **Language** | TypeScript |
+| **UI Library** | React |
+| **Styling** | Tailwind CSS |
+| **Components** | ShadCN UI |
+| **Generative AI** | Firebase Genkit + Google’s Gemini Models |
+| **Conversational AI** | Gemini 2.5 Flash (text) |
+| **Voice Synthesis** | Gemini 2.5 Flash Preview TTS |
+| **Speech Recognition** | Web Speech API (SpeechRecognition / webkitSpeechRecognition) |
+| **Audio Handling** | WAV encoding & HTML5 Audio API |
+| **Icons** | Lucide React |
+| **State Management** | React Hooks + Context API |
+| **Data Persistence** | Browser Local Storage |
+| **Deployment** | Firebase App Hosting |
+
+---
+
+## 🧩 System Architecture Diagram
+
+![ManasMitra Agentic AI Architecture](https://via.placeholder.com/1200x700.png?text=Agentic+AI+System+Architecture+Diagram)
+
+*(Replace the above link with your actual architecture diagram image once ready.)*
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- **Node.js v18+**
+- **npm** (v9+ recommended)
+
+### Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/your-username/manasmitra.git
+
+# Navigate into the project directory
+cd manasmitra
+
+# Install dependencies
+npm install
+
+Run the Development Server
 npm run dev
-```
 
-This will start the Next.js development server, and you can view the application by navigating to `http://localhost:9002` in your browser.
 
-since this is new It is just a prototype
+Then open http://localhost:9002 in your browser.
 
