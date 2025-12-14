@@ -39,6 +39,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { motion } from 'framer-motion';
+import { staggerContainerVariants, staggerItemVariants } from '@/lib/animations';
 
 const menuItems = [
   { href: '/', label: 'Dashboard', icon: LayoutDashboard },
@@ -82,30 +84,53 @@ export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader>
-        <div className="flex items-center gap-2">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+        <motion.div 
+          className="flex items-center gap-2"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <motion.div 
+            className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground"
+            whileHover={{ 
+              rotate: [0, -10, 10, -10, 0],
+              scale: [1, 1.1, 1]
+            }}
+            transition={{ duration: 0.5 }}
+          >
             <Sparkles className="h-6 w-6" />
-          </div>
+          </motion.div>
           <h1 className="text-xl font-bold font-headline">ManasMitra</h1>
-        </div>
+        </motion.div>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarMenu>
-          {menuItems.map((item) => (
-            <SidebarMenuItem key={item.label}>
-              <SidebarMenuButton
-                asChild
-                isActive={pathname === item.href}
-                tooltip={item.label}
+        <motion.div
+          variants={staggerContainerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <SidebarMenu>
+            {menuItems.map((item, index) => (
+              <motion.div
+                key={item.label}
+                variants={staggerItemVariants}
               >
-                <Link href={item.href}>
-                  <item.icon />
-                  <span>{item.label}</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
-        </SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={pathname === item.href}
+                    tooltip={item.label}
+                  >
+                    <Link href={item.href}>
+                      <item.icon />
+                      <span>{item.label}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </motion.div>
+            ))}
+          </SidebarMenu>
+        </motion.div>
       </SidebarContent>
       <SidebarFooter>
         {isUserLoading ? (
