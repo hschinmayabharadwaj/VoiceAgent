@@ -1,5 +1,4 @@
 'use client';
-
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
@@ -16,6 +15,7 @@ import {
   Mic,
   Bot,
   Brain,
+  Rocket,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -51,6 +51,7 @@ const menuItems = [
   { href: '/games', label: 'Games', icon: Gamepad2 },
   { href: '/voice-agent', label: 'Voice Agent', icon: Mic },
   { href: '/chat', label: 'Chat Bot', icon: Bot },
+  { href: '/motion-arcade', label: 'Motion Arcade', icon: Rocket },
 ];
 
 export function AppSidebar() {
