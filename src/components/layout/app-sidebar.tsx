@@ -50,7 +50,6 @@ const menuItems = [
   { href: '/forum', label: 'Forum', icon: MessageSquare },
   { href: '/games', label: 'Games', icon: Gamepad2 },
   { href: '/voice-agent', label: 'Voice Agent', icon: Mic },
-  { href: '/chat', label: 'Chat Bot', icon: Bot },
   { href: '/motion-arcade', label: 'Motion Arcade', icon: Rocket },
 ];
 
