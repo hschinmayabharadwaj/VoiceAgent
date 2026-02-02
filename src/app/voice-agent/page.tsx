@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Mic, MicOff, Loader2, Volume2, User, Bot, Send } from 'lucide-react';
 import { voiceAgent, textToSpeech } from '@/lib/actions';
 import { useToast } from '@/hooks/use-toast';
+import { useLanguage } from '@/contexts/language-context';
 
 interface Message {
   role: 'user' | 'model';
@@ -15,6 +16,7 @@ interface Message {
 }
 
 export default function VoiceAgentPage() {
+  const { t } = useLanguage();
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -209,13 +211,13 @@ export default function VoiceAgentPage() {
 
   return (
     <div className="flex-1 flex flex-col">
-      <PageHeader breadcrumbs={[{ href: '/', label: 'Dashboard' }, { label: 'Voice Agent' }]} />
+      <PageHeader breadcrumbs={[{ href: '/', label: t('nav.dashboard') }, { label: t('nav.voiceAgent') }]} />
       <div className="flex-1 p-4 md:p-8 flex justify-center">
         <Card className="w-full max-w-2xl">
           <CardHeader className="text-center">
-            <CardTitle className="text-3xl font-bold font-headline">Voice Agent</CardTitle>
+            <CardTitle className="text-3xl font-bold font-headline">{t('voice.title')}</CardTitle>
             <CardDescription className="text-lg text-muted-foreground">
-              A safe space to talk through your feelings. {useVoice ? 'Use voice or text input.' : 'Use text input.'}
+              {t('voice.subtitle')}
             </CardDescription>
           </CardHeader>
 

@@ -139,21 +139,50 @@ User Hears Response
 ### Prerequisites
 - **Node.js v18+**
 - **npm** (v9+ recommended)
+- **Google AI API Key** - Get your free API key from [Google AI Studio](https://aistudio.google.com/app/apikey)
 
 ### Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/manasmitra.git
+git clone https://github.com/SKPrxv/ManasMitra.git
+
+# Switch to the Bhanu branch
+git checkout Bhanu
 
 # Navigate into the project directory
-cd manasmitra
+cd ManasMitra
 
 # Install dependencies
 npm install
+```
 
-# Run the Development Server
+### Environment Setup
+
+Create a `.env.local` file in the root directory:
+
+```env
+# Google AI (Gemini) API Key - Required for AI features
+GOOGLE_GENAI_API_KEY=your_google_ai_api_key_here
+GOOGLE_API_KEY=your_google_ai_api_key_here
+```
+
+### Run the Application
+
+```bash
+# Start the development server
 npm run dev
+```
 
-Then open http://localhost:9002 in your browser.
+Then open **http://localhost:9002** in your browser.
+
+### Build for Production
+
+```bash
+# Create production build
+npm run build
+
+# Start production server
+npm start
+```
 

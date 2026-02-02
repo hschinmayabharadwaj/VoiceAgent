@@ -16,6 +16,9 @@ import {
   Bot,
   Brain,
   Rocket,
+  Settings,
+  Phone,
+  Heart,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -41,20 +44,22 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { motion } from 'framer-motion';
 import { staggerContainerVariants, staggerItemVariants } from '@/lib/animations';
+import { useLanguage } from '@/contexts/language-context';
 
 const menuItems = [
-  { href: '/', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/check-in', label: 'Daily Check-in', icon: SmilePlus },
-  { href: '/progress', label: 'My Progress', icon: LineChart },
-  { href: '/mindfulness', label: 'Mindfulness', icon: Brain },
-  { href: '/forum', label: 'Forum', icon: MessageSquare },
-  { href: '/games', label: 'Games', icon: Gamepad2 },
-  { href: '/voice-agent', label: 'AI Assitance', icon: Mic },
-  { href: '/motion-arcade', label: 'Motion Arcade', icon: Rocket },
+  { href: '/', label: 'nav.dashboard', icon: LayoutDashboard },
+  { href: '/check-in', label: 'nav.checkin', icon: SmilePlus },
+  { href: '/progress', label: 'nav.progress', icon: LineChart },
+  { href: '/mindfulness', label: 'nav.mindfulness', icon: Brain },
+  { href: '/forum', label: 'nav.forum', icon: MessageSquare },
+  { href: '/games', label: 'nav.games', icon: Gamepad2 },
+  { href: '/voice-agent', label: 'nav.voiceAgent', icon: Mic },
+  { href: '/motion-arcade', label: 'nav.motionArcade', icon: Rocket },
 ];
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const { t } = useLanguage();
   const userAvatar = PlaceHolderImages.find((img) => img.id === 'user-avatar');
   const { user, isUserLoading } = useUser();
   const auth = useAuth();
@@ -119,18 +124,64 @@ export function AppSidebar() {
                   <SidebarMenuButton
                     asChild
                     isActive={pathname === item.href}
-                    tooltip={item.label}
+                    tooltip={t(item.label)}
                   >
                     <Link href={item.href}>
                       <item.icon />
-                      <span>{item.label}</span>
+                      <span>{t(item.label)}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               </motion.div>
             ))}
+            
+            {/* Divider */}
+            <div className="my-2 mx-2 border-t border-sidebar-border" />
+            
+            {/* Settings */}
+            <motion.div variants={staggerItemVariants}>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname === '/settings'}
+                  tooltip={t('common.settings')}
+                >
+                  <Link href="/settings">
+                    <Settings />
+                    <span>{t('common.settings')}</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </motion.div>
           </SidebarMenu>
         </motion.div>
+        
+        {/* Crisis Helpline Quick Access */}
+        <div className="mt-auto p-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="rounded-lg bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900 p-3"
+          >
+            <div className="flex items-center gap-2 text-red-700 dark:text-red-400 mb-2">
+              <Heart className="w-4 h-4" aria-hidden="true" />
+              <span className="text-sm font-semibold">{t('crisis.needHelp')}</span>
+            </div>
+            <p className="text-xs text-red-600 dark:text-red-400 mb-2">
+              {t('crisis.helpAvailable')}
+            </p>
+            <Button
+              size="sm"
+              variant="outline"
+              className="w-full gap-2 text-red-700 border-red-300 hover:bg-red-100 dark:text-red-400 dark:border-red-800 dark:hover:bg-red-950"
+              onClick={() => window.open('tel:988', '_blank')}
+            >
+              <Phone className="w-3 h-3" aria-hidden="true" />
+              <span suppressHydrationWarning>Call 988</span>
+            </Button>
+          </motion.div>
+        </div>
       </SidebarContent>
       <SidebarFooter>
         {isUserLoading ? (

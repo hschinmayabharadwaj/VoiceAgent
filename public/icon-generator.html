@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ManasMitra Icon Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: white;
+        }
+        .icons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .icon-container {
+            text-align: center;
+        }
+        canvas {
+            border: 1px solid #333;
+            border-radius: 20px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #4DB6AC;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #26A69A;
+        }
+    </style>
+</head>
+<body>
+    <h1>ManasMitra PWA Icon Generator</h1>
+    <p>Click each button to download the PNG icon, then place them in <code>public/icons/</code></p>
+    
+    <div class="icons">
+        <div class="icon-container">
+            <canvas id="icon512" width="512" height="512"></canvas>
+            <br>
+            <button onclick="downloadIcon(512)">Download 512x512</button>
+        </div>
+        <div class="icon-container">
+            <canvas id="icon192" width="192" height="192"></canvas>
+            <br>
+            <button onclick="downloadIcon(192)">Download 192x192</button>
+        </div>
+        <div class="icon-container">
+            <canvas id="icon180" width="180" height="180"></canvas>
+            <br>
+            <button onclick="downloadIcon(180)">Download 180x180 (Apple)</button>
+        </div>
+        <div class="icon-container">
+            <canvas id="icon144" width="144" height="144"></canvas>
+            <br>
+            <button onclick="downloadIcon(144)">Download 144x144</button>
+        </div>
+    </div>
+
+    <script>
+        function drawIcon(ctx, size) {
+            const scale = size / 512;
+            
+            // Background gradient
+            const bgGrad = ctx.createLinearGradient(0, 0, size, size);
+            bgGrad.addColorStop(0, '#5DD3C8');
+            bgGrad.addColorStop(0.5, '#4DB6AC');
+            bgGrad.addColorStop(1, '#26A69A');
+            
+            // Draw rounded rectangle background
+            const radius = 108 * scale;
+            ctx.beginPath();
+            ctx.roundRect(0, 0, size, size, radius);
+            ctx.fillStyle = bgGrad;
+            ctx.fill();
+            
+            // Subtle circles overlay
+            ctx.globalAlpha = 0.1;
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(80 * scale, 80 * scale, 60 * scale, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(432 * scale, 432 * scale, 80 * scale, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(420 * scale, 100 * scale, 40 * scale, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.globalAlpha = 1;
+            
+            // Center point
+            const cx = size / 2;
+            const cy = size / 2 - 20 * scale;
+            
+            // Draw lotus petals (simplified)
+            ctx.save();
+            ctx.translate(cx, cy);
+            
+            // Outer petals
+            const petalGrad = ctx.createLinearGradient(-100 * scale, 0, 100 * scale, 0);
+            petalGrad.addColorStop(0, '#E1BEE7');
+            petalGrad.addColorStop(1, '#CE93D8');
+            
+            for (let i = 0; i < 5; i++) {
+                ctx.save();
+                ctx.rotate((i - 2) * 0.35);
+                ctx.beginPath();
+                ctx.ellipse(0, -60 * scale, 25 * scale, 50 * scale, 0, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+                ctx.fill();
+                ctx.restore();
+            }
+            
+            // Inner petals
+            for (let i = 0; i < 3; i++) {
+                ctx.save();
+                ctx.rotate((i - 1) * 0.4);
+                ctx.beginPath();
+                ctx.ellipse(0, -40 * scale, 20 * scale, 40 * scale, 0, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                ctx.fill();
+                ctx.restore();
+            }
+            
+            // Heart in center
+            const heartGrad = ctx.createLinearGradient(-30 * scale, -30 * scale, 30 * scale, 30 * scale);
+            heartGrad.addColorStop(0, '#F48FB1');
+            heartGrad.addColorStop(1, '#EC407A');
+            
+            ctx.fillStyle = heartGrad;
+            const hs = 0.4 * scale;
+            ctx.beginPath();
+            ctx.moveTo(0, 15 * hs * 100);
+            ctx.bezierCurveTo(-50 * hs * 100, -10 * hs * 100, -50 * hs * 100, -60 * hs * 100, 0, -35 * hs * 100);
+            ctx.bezierCurveTo(50 * hs * 100, -60 * hs * 100, 50 * hs * 100, -10 * hs * 100, 0, 15 * hs * 100);
+            ctx.fill();
+            
+            // Simpler heart
+            ctx.beginPath();
+            const heartSize = 35 * scale;
+            ctx.moveTo(0, heartSize * 0.4);
+            ctx.bezierCurveTo(-heartSize, -heartSize * 0.2, -heartSize, -heartSize, 0, -heartSize * 0.5);
+            ctx.bezierCurveTo(heartSize, -heartSize, heartSize, -heartSize * 0.2, 0, heartSize * 0.4);
+            ctx.fillStyle = heartGrad;
+            ctx.shadowColor = 'rgba(236, 64, 122, 0.4)';
+            ctx.shadowBlur = 15 * scale;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+            
+            // Sparkles
+            ctx.fillStyle = 'white';
+            ctx.globalAlpha = 0.9;
+            
+            // Star function
+            function drawStar(x, y, r) {
+                ctx.beginPath();
+                for (let i = 0; i < 4; i++) {
+                    const angle = (i * Math.PI) / 2;
+                    const x1 = x + Math.cos(angle) * r;
+                    const y1 = y + Math.sin(angle) * r;
+                    if (i === 0) ctx.moveTo(x1, y1);
+                    else ctx.lineTo(x1, y1);
+                    const midAngle = angle + Math.PI / 4;
+                    const x2 = x + Math.cos(midAngle) * r * 0.3;
+                    const y2 = y + Math.sin(midAngle) * r * 0.3;
+                    ctx.lineTo(x2, y2);
+                }
+                ctx.closePath();
+                ctx.fill();
+            }
+            
+            drawStar(-80 * scale, -50 * scale, 8 * scale);
+            drawStar(85 * scale, -40 * scale, 6 * scale);
+            drawStar(70 * scale, 50 * scale, 5 * scale);
+            
+            ctx.restore();
+            
+            // Draw text "M" at bottom (stylized)
+            ctx.font = `bold ${60 * scale}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = 'white';
+            ctx.globalAlpha = 0.9;
+            ctx.fillText('M', cx, size - 70 * scale);
+            ctx.globalAlpha = 1;
+        }
+        
+        // Draw all icons
+        [512, 192, 180, 144].forEach(size => {
+            const canvas = document.getElementById('icon' + size);
+            const ctx = canvas.getContext('2d');
+            drawIcon(ctx, size);
+        });
+        
+        function downloadIcon(size) {
+            const canvas = document.getElementById('icon' + size);
+            const link = document.createElement('a');
+            link.download = `icon-${size}x${size}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <!-- Main gradient - calming teal -->
+    <linearGradient id="mainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#5DD3C8"/>
+      <stop offset="50%" style="stop-color:#4DB6AC"/>
+      <stop offset="100%" style="stop-color:#26A69A"/>
+    </linearGradient>
+    
+    <!-- Accent gradient - soft purple -->
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E1BEE7"/>
+      <stop offset="100%" style="stop-color:#CE93D8"/>
+    </linearGradient>
+    
+    <!-- Heart gradient -->
+    <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F48FB1"/>
+      <stop offset="100%" style="stop-color:#EC407A"/>
+    </linearGradient>
+    
+    <!-- Glow effect -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Soft shadow -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  
+  <!-- Background with rounded corners -->
+  <rect width="512" height="512" rx="108" fill="url(#mainGrad)"/>
+  
+  <!-- Subtle pattern overlay -->
+  <g opacity="0.1">
+    <circle cx="80" cy="80" r="60" fill="white"/>
+    <circle cx="432" cy="432" r="80" fill="white"/>
+    <circle cx="420" cy="100" r="40" fill="white"/>
+  </g>
+  
+  <!-- Main icon container -->
+  <g transform="translate(256, 240)" filter="url(#shadow)">
+    
+    <!-- Lotus base petals (representing mindfulness) -->
+    <g opacity="0.9">
+      <!-- Left outer petal -->
+      <ellipse cx="-85" cy="60" rx="35" ry="55" fill="white" transform="rotate(-30 -85 60)"/>
+      <!-- Right outer petal -->
+      <ellipse cx="85" cy="60" rx="35" ry="55" fill="white" transform="rotate(30 85 60)"/>
+      <!-- Left middle petal -->
+      <ellipse cx="-50" cy="45" rx="30" ry="50" fill="white" transform="rotate(-15 -50 45)"/>
+      <!-- Right middle petal -->
+      <ellipse cx="50" cy="45" rx="30" ry="50" fill="white" transform="rotate(15 50 45)"/>
+      <!-- Center petal -->
+      <ellipse cx="0" cy="30" rx="28" ry="55" fill="white"/>
+    </g>
+    
+    <!-- Brain/Mind symbol in center -->
+    <g transform="translate(0, -20)">
+      <!-- Brain outline -->
+      <path d="M-50,-55 
+               C-75,-55 -90,-30 -90,5 
+               C-90,35 -75,60 -50,65 
+               C-30,68 -15,50 0,50 
+               C15,50 30,68 50,65 
+               C75,60 90,35 90,5 
+               C90,-30 75,-55 50,-55 
+               C30,-55 15,-40 0,-40 
+               C-15,-40 -30,-55 -50,-55 Z" 
+            fill="url(#accentGrad)"
+            stroke="white"
+            stroke-width="3"/>
+      
+      <!-- Brain center line -->
+      <path d="M0,-40 Q-5,-10 0,20 Q5,35 0,50" 
+            stroke="white" 
+            stroke-width="3" 
+            fill="none"
+            stroke-linecap="round"/>
+      
+      <!-- Left brain curves -->
+      <path d="M-70,-10 Q-45,-5 -25,0" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.9"/>
+      <path d="M-70,20 Q-45,15 -25,10" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.9"/>
+      
+      <!-- Right brain curves -->
+      <path d="M70,-10 Q45,-5 25,0" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.9"/>
+      <path d="M70,20 Q45,15 25,10" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.9"/>
+      
+      <!-- Heart in brain center -->
+      <path d="M0,35 
+               C-12,22 -22,8 -14,-5 
+               C-6,-18 0,-12 0,-2 
+               C0,-12 6,-18 14,-5 
+               C22,8 12,22 0,35 Z" 
+            fill="url(#heartGrad)"
+            filter="url(#glow)"/>
+    </g>
+    
+    <!-- Sparkle accents -->
+    <g fill="white" filter="url(#glow)">
+      <!-- Top sparkles -->
+      <circle cx="-70" cy="-90" r="5" opacity="0.9"/>
+      <circle cx="70" cy="-90" r="5" opacity="0.9"/>
+      <circle cx="0" cy="-100" r="6" opacity="0.95"/>
+      
+      <!-- Side sparkles -->
+      <circle cx="-110" cy="-20" r="4" opacity="0.8"/>
+      <circle cx="110" cy="-20" r="4" opacity="0.8"/>
+      
+      <!-- Small accent dots -->
+      <circle cx="-90" cy="-60" r="3" opacity="0.7"/>
+      <circle cx="90" cy="-60" r="3" opacity="0.7"/>
+    </g>
+    
+  </g>
+  
+  <!-- App name at bottom -->
+  <text x="256" y="455" 
+        font-family="Segoe UI, system-ui, -apple-system, sans-serif" 
+        font-size="42" 
+        font-weight="600" 
+        fill="white" 
+        text-anchor="middle"
+        letter-spacing="1">
+    ManasMitra
+  </text>
+  
+  <!-- Tagline -->
+  <text x="256" y="485" 
+        font-family="Segoe UI, system-ui, -apple-system, sans-serif" 
+        font-size="16" 
+        font-weight="400" 
+        fill="white" 
+        fill-opacity="0.85"
+        text-anchor="middle"
+        letter-spacing="2">
+    MENTAL WELLNESS
+  </text>
+  
+</svg>

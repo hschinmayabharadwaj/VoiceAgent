@@ -9,8 +9,10 @@ import { Brain, Clock, Heart, Sparkles } from 'lucide-react';
 import { MindfulnessSessionType, ExperienceLevel } from '@/lib/types';
 import { SessionPlayer } from '@/components/mindfulness/session-player'; // Verify the file exists at 'src/components/mindfulness/session-player.tsx' or adjust the path accordingly
 import { SessionSelector } from '@/components/mindfulness/session-selector';
+import { useLanguage } from '@/contexts/language-context';
 
 export default function MindfulnessPage() {
+  const { t } = useLanguage();
   const [selectedSession, setSelectedSession] = useState<{
     type: MindfulnessSessionType;
     duration: number;
@@ -76,15 +78,14 @@ export default function MindfulnessPage() {
 
   return (
     <div className="flex-1 flex flex-col">
-      <PageHeader breadcrumbs={[{ href: '/', label: 'Dashboard' }, { label: 'Mindfulness' }]} />
+      <PageHeader breadcrumbs={[{ href: '/', label: t('nav.dashboard') }, { label: t('nav.mindfulness') }]} />
       <div className="flex-1 container mx-auto px-4 py-8 max-w-6xl">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold mb-4 font-headline text-primary">
-            Mindfulness Sessions
+            {t('mindfulness.title')}
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Take a moment to center yourself. Choose from guided breathing exercises, 
-            meditations, and mindful moments designed to help you find calm and clarity.
+            {t('mindfulness.subtitle')}
           </p>
         </div>
 

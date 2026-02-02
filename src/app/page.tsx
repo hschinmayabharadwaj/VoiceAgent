@@ -9,8 +9,11 @@ import { ArrowRight, BookHeart, LineChart } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { staggerContainerVariants, staggerItemVariants, cardHoverVariants } from '@/lib/animations';
+import { useLanguage } from '@/contexts/language-context';
 
 export default function Home() {
+  const { t } = useLanguage();
+  
   return (
     <motion.div 
       className="flex-1 flex flex-col"
@@ -18,7 +21,7 @@ export default function Home() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <PageHeader breadcrumbs={[{ label: 'Dashboard' }]} />
+      <PageHeader breadcrumbs={[{ label: t('nav.dashboard') }]} />
       <motion.div 
         className="flex-1 flex flex-col gap-8 p-4 md:p-8"
         variants={staggerContainerVariants}
@@ -49,7 +52,7 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
               >
-                How are you feeling today?
+                {t('dashboard.howFeeling')}
               </motion.h3>
               <motion.p 
                 className="mb-6 text-muted-foreground"
@@ -57,7 +60,7 @@ export default function Home() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.7 }}
               >
-                Take a moment to check in with yourself. It only takes a minute.
+                {t('dashboard.checkInPrompt')}
               </motion.p>
               <motion.div
                 whileHover={{ scale: 1.05 }}
@@ -65,7 +68,7 @@ export default function Home() {
               >
                 <Button asChild size="lg">
                   <Link href="/check-in">
-                    Start Daily Check-in <ArrowRight className="ml-2 transition-transform group-hover:translate-x-1" />
+                    {t('dashboard.startCheckIn')} <ArrowRight className="ml-2 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </Button>
               </motion.div>
@@ -92,15 +95,15 @@ export default function Home() {
                   <LineChart className="w-8 h-8"/>
                 </motion.div>
                 <div>
-                  <h3 className="text-lg font-bold mb-1 font-headline">Track Your Progress</h3>
-                  <p className="text-sm text-muted-foreground mb-4">See your mood trends and celebrate your journey.</p>
+                  <h3 className="text-lg font-bold mb-1 font-headline">{t('dashboard.trackProgress')}</h3>
+                  <p className="text-sm text-muted-foreground mb-4">{t('dashboard.trackProgressDesc')}</p>
                   <motion.div
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     <Button variant="outline" asChild>
                       <Link href="/progress" className="group">
-                        View Progress <ArrowRight className="ml-2 transition-transform group-hover:translate-x-1"/>
+                        {t('dashboard.viewProgress')} <ArrowRight className="ml-2 transition-transform group-hover:translate-x-1"/>
                       </Link>
                     </Button>
                   </motion.div>
@@ -124,15 +127,15 @@ export default function Home() {
                   <BookHeart className="w-8 h-8"/>
                 </motion.div>
                 <div>
-                  <h3 className="text-lg font-bold mb-1 font-headline">Explore Resources</h3>
-                  <p className="text-sm text-muted-foreground mb-4">Find articles, exercises, and support tools.</p>
+                  <h3 className="text-lg font-bold mb-1 font-headline">{t('dashboard.exploreResources')}</h3>
+                  <p className="text-sm text-muted-foreground mb-4">{t('dashboard.exploreResourcesDesc')}</p>
                   <motion.div
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     <Button variant="outline" asChild>
                       <Link href="/resources" className="group">
-                        Browse Resources <ArrowRight className="ml-2 transition-transform group-hover:translate-x-1"/>
+                        {t('dashboard.browseResources')} <ArrowRight className="ml-2 transition-transform group-hover:translate-x-1"/>
                       </Link>
                     </Button>
                   </motion.div>

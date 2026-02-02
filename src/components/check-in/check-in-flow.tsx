@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState, useTransition, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter, CardDescription } from '@/components/ui/card';
@@ -10,6 +10,10 @@ import { useCheckIns } from '@/lib/hooks/use-check-ins';
 import { ArrowLeft, Loader2, Sparkles, BookOpen } from 'lucide-react';
 import { type Mood, type Feeling } from '@/lib/types';
 import Link from 'next/link';
+import { detectCrisisLevel, CrisisLevel } from '@/lib/crisis-detection';
+import { CrisisAlertDialog } from '@/components/crisis/crisis-alert-dialog';
+import { AILoading } from '@/components/ui/loading';
+import { useLanguage } from '@/contexts/language-context';
 
 const moods: Mood[] = [
   { name: 'Happy', emoji: '😄' },
@@ -43,6 +47,26 @@ export function CheckInFlow() {
   const [aiResponse, setAiResponse] = useState<AIResponseType>(null);
   const [isPending, startTransition] = useTransition();
   const { addCheckIn } = useCheckIns();
+  const { t } = useLanguage();
+  
+  // Crisis detection state
+  const [crisisLevel, setCrisisLevel] = useState<CrisisLevel | null>(null);
+  const [showCrisisDialog, setShowCrisisDialog] = useState(false);
+
+  // Check for crisis signals when details change
+  useEffect(() => {
+    if (details.length > 10) {
+      const level = detectCrisisLevel(details);
+      if (level.level !== 'none') {
+        setCrisisLevel(level);
+        if (level.level === 'critical' || level.level === 'high') {
+          setShowCrisisDialog(true);
+        }
+      } else {
+        setCrisisLevel(null);
+      }
+    }
+  }, [details]);
 
   const handleFeelingToggle = (feeling: Feeling) => {
     setSelectedFeelings((prev) =>
@@ -80,7 +104,17 @@ export function CheckInFlow() {
     setSelectedFeelings([]);
     setDetails('');
     setAiResponse(null);
+    setCrisisLevel(null);
   }
+
+  const handleCrisisDialogClose = () => {
+    setShowCrisisDialog(false);
+  };
+
+  const handleCrisisContinue = () => {
+    setShowCrisisDialog(false);
+    // Continue with the check-in
+  };
 
   const renderStep = () => {
     switch (step) {
@@ -271,13 +305,7 @@ export function CheckInFlow() {
                     </motion.div>
                   </>
               ) : (
-                <motion.div 
-                  className="flex justify-center items-center h-40"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                >
-                  <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                </motion.div>
+                <AILoading variant="response" />
               )}
             </CardContent>
             <CardFooter className="flex-col gap-4">
@@ -296,16 +324,24 @@ export function CheckInFlow() {
   };
 
   return (
-      <AnimatePresence mode="wait">
-        <motion.div
-            key={step}
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-            transition={{ duration: 0.3 }}
-        >
-          {renderStep()}
-        </motion.div>
-      </AnimatePresence>
+      <>
+        <CrisisAlertDialog
+          crisisLevel={crisisLevel}
+          isOpen={showCrisisDialog}
+          onClose={handleCrisisDialogClose}
+          onContinue={handleCrisisContinue}
+        />
+        <AnimatePresence mode="wait">
+          <motion.div
+              key={step}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.3 }}
+          >
+            {renderStep()}
+          </motion.div>
+        </AnimatePresence>
+      </>
   );
 }

@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { PenSquare, X } from "lucide-react";
 import { type Post } from "@/lib/types";
 import React, { useState } from "react";
+import { PageHeader } from "@/components/layout/page-header";
+import { useLanguage } from "@/contexts/language-context";
 
 const mockPosts: Post[] = [
 	{
@@ -34,6 +36,7 @@ const mockPosts: Post[] = [
 ];
 
 export default function ForumPage() {
+	const { t } = useLanguage();
 	const [showCreatePost, setShowCreatePost] = useState(false);
 	const [posts, setPosts] = useState<Post[]>(mockPosts);
 
@@ -51,34 +54,37 @@ export default function ForumPage() {
 	};
 
 	return (
-		<div className="p-4 md:p-8">
-			<div className="flex justify-between items-center mb-8">
-				<div>
-					<h1 className="text-3xl font-bold font-headline">Support Forum</h1>
-					<p className="text-lg text-muted-foreground">A safe and anonymous space to share and connect.</p>
-				</div>
-				<Button onClick={() => setShowCreatePost(true)}>
-					<PenSquare className="mr-2 h-4 w-4" />
-					Create Post
-				</Button>
-			</div>
-
-			{showCreatePost && (
-				<div className="mb-8 bg-white shadow-lg rounded-lg p-6">
-					<div className="flex justify-between items-center mb-4">
-						<h2 className="text-xl font-semibold">Create New Post</h2>
-						<Button variant="ghost" size="sm" onClick={() => setShowCreatePost(false)}>
-							<X className="h-4 w-4" />
-						</Button>
+		<div className="flex-1 flex flex-col">
+			<PageHeader breadcrumbs={[{ href: '/', label: t('nav.dashboard') }, { label: t('nav.forum') }]} />
+			<div className="p-4 md:p-8">
+				<div className="flex justify-between items-center mb-8">
+					<div>
+						<h1 className="text-3xl font-bold font-headline">{t('forum.title')}</h1>
+						<p className="text-lg text-muted-foreground">{t('forum.subtitle')}</p>
 					</div>
-					<PostComposer onSubmit={handleCreatePost} />
+					<Button onClick={() => setShowCreatePost(true)}>
+						<PenSquare className="mr-2 h-4 w-4" />
+						Create Post
+					</Button>
 				</div>
-			)}
 
-			<div className="space-y-6">
-				{posts.map((post) => (
-					<PostCard key={post.id} post={post} />
-				))}
+				{showCreatePost && (
+					<div className="mb-8 bg-white shadow-lg rounded-lg p-6">
+						<div className="flex justify-between items-center mb-4">
+							<h2 className="text-xl font-semibold">Create New Post</h2>
+							<Button variant="ghost" size="sm" onClick={() => setShowCreatePost(false)}>
+								<X className="h-4 w-4" />
+							</Button>
+						</div>
+						<PostComposer onSubmit={handleCreatePost} />
+					</div>
+				)}
+
+				<div className="space-y-6">
+					{posts.map((post) => (
+						<PostCard key={post.id} post={post} />
+					))}
+				</div>
 			</div>
 		</div>
 	);
