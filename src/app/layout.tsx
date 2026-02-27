@@ -1,7 +1,5 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
-import { SidebarProvider, SidebarInset, SidebarRail } from '@/components/ui/sidebar';
-import { AppSidebar } from '@/components/layout/app-sidebar';
 import { Toaster } from '@/components/ui/toaster';
 import { FirebaseClientProvider } from '@/firebase';
 import { AppProviders } from '@/components/providers/app-providers';
@@ -64,16 +62,10 @@ export default function RootLayout({
       <body className="font-body antialiased">
         <FirebaseClientProvider>
           <AppProviders>
-            <SidebarProvider>
-              <AppSidebar />
-              <SidebarRail />
-              <SidebarInset>
-                <main id="main-content" tabIndex={-1} className="outline-none">
-                  {children}
-                </main>
-              </SidebarInset>
-              <Toaster />
-            </SidebarProvider>
+            <main id="main-content" tabIndex={-1} className="outline-none min-h-screen">
+              {children}
+            </main>
+            <Toaster />
           </AppProviders>
         </FirebaseClientProvider>
       </body>

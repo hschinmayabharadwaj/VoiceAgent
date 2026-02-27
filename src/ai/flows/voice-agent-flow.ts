@@ -38,12 +38,28 @@ export type ConversationOutput = z.infer<typeof ConversationOutputSchema>;
 export type TTSInput = z.infer<typeof TTSInputSchema>;
 export type TTSOutput = z.infer<typeof TTSOutputSchema>;
 
+// Define schemas for speech-to-text
+const STTInputSchema = z.object({
+  audioDataUri: z.string().describe('Base64 encoded audio data URI from the microphone.'),
+});
+
+const STTOutputSchema = z.object({
+  transcript: z.string().describe('The transcribed text from the audio.'),
+});
+
+export type STTInput = z.infer<typeof STTInputSchema>;
+export type STTOutput = z.infer<typeof STTOutputSchema>;
+
 export async function voiceAgent(input: ConversationInput): Promise<ConversationOutput> {
   return voiceAgentFlow(input);
 }
 
 export async function textToSpeech(input: TTSInput): Promise<TTSOutput> {
   return textToSpeechFlow(input);
+}
+
+export async function speechToText(input: STTInput): Promise<STTOutput> {
+  return speechToTextFlow(input);
 }
 
 
@@ -145,5 +161,23 @@ const textToSpeechFlow = ai.defineFlow(
     return {
         audioDataUri: `data:audio/wav;base64,${wavBase64}`
     };
+  }
+);
+
+const speechToTextFlow = ai.defineFlow(
+  {
+    name: 'speechToTextFlow',
+    inputSchema: STTInputSchema,
+    outputSchema: STTOutputSchema,
+  },
+  async ({ audioDataUri }) => {
+    const { text } = await ai.generate({
+      model: 'googleai/gemini-2.5-flash',
+      prompt: [
+        { media: { url: audioDataUri } },
+        { text: 'Transcribe this audio exactly as spoken. Return only the transcription, nothing else.' },
+      ],
+    });
+    return { transcript: text?.trim() || '' };
   }
 );
