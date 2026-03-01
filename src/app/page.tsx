@@ -1,5 +1,5 @@
 'use client';
-
+import { checkAndIntervene } from '@/lib/analyze-behavior';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -50,7 +50,25 @@ export default function Home() {
     setMessages(newMessages);
     setInputText('');
     setIsLoading(true);
+// Screen message with .pkl model
+const intervention = await checkAndIntervene(text);
 
+if (intervention.shouldIntervene) {
+  // Risk detected — skip normal AI, use crisis response
+  const aiMessage: Message = { role: 'model', content: intervention.crisisResponse };
+  setMessages(prev => [...prev, aiMessage]);
+  
+  setIsGeneratingAudio(true);
+  const audioResult = await textToSpeech({ text: intervention.crisisResponse });
+  setIsGeneratingAudio(false);
+  
+  if (audioResult.audioDataUri && audioPlayerRef.current) {
+    audioPlayerRef.current.src = audioResult.audioDataUri;
+    audioPlayerRef.current.play().catch(console.warn);
+  }
+  setIsLoading(false);
+  return; // Skip normal voiceAgent() flow
+}
     try {
       const response = await voiceAgent({
         history: newMessages,
